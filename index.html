@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>三年級 加法和減法（四位數）— 五邑工商總會學校 FDBWA</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--cream:#fdf6e3;--ink:#3a3a3a;--shadow:0 6px 0 #e8d97a}
+body{font-family:'Comic Sans MS','Chalkboard SE','微軟正黑體','Microsoft JhengHei',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;overflow-x:hidden;display:flex;flex-direction:column;align-items:center;padding:12px 8px 32px}
+.blob{position:fixed;border-radius:50%;opacity:.35;filter:blur(48px);z-index:-10}
+.b1{width:280px;height:280px;background:#ffd6a5;top:8%;left:5%}
+.b2{width:220px;height:220px;background:#a0e8df;top:55%;right:8%}
+.b3{width:180px;height:180px;background:#ffc9d4;top:80%;left:30%}
+.banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0 4px}
+.tile{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:bold;color:#fff;box-shadow:var(--shadow)}
+.tf{background:#e8556b}.td{background:#f0a040}.tb{background:#4cb5d9}.tw{background:#7bc043}.ta{background:#a87fd0}
+.bt{font-size:14px;line-height:1.6;text-align:center}
+.bt b{font-size:16px}
+.pw{display:flex;gap:4px;margin:12px 0 8px;flex-wrap:wrap;justify-content:center;max-width:480px}
+.pip{width:22px;height:22px;border-radius:50%;background:#eee3c8;box-shadow:0 2px 0 #d9c9a0;display:flex;align-items:center;justify-content:center;font-size:11px}
+.pip.done{background:#b5e8a0;box-shadow:0 2px 0 #8dd06e}
+.pip.wrong{background:#f5b5b5;box-shadow:0 2px 0 #d98080}
+.card{background:#fff8e8;border-radius:18px;padding:24px 20px;margin:8px auto;max-width:560px;width:100%;box-shadow:var(--shadow);border:2px solid #f0e4c0;text-align:center}
+.ql{font-size:16px;color:#888;margin-bottom:8px}
+.qt{font-size:26px;font-weight:bold;margin:12px 0 20px;line-height:1.5}
+.opts{display:flex;flex-direction:column;gap:10px;max-width:400px;margin:0 auto}
+.opt{padding:14px 20px;border-radius:14px;font-size:22px;font-weight:bold;cursor:pointer;background:#fff;border:3px solid #ddd0a8;color:var(--ink);box-shadow:var(--shadow);transition:transform .08s,background .15s,border-color .15s;user-select:none}
+.opt:hover{border-color:#4cb5d9}
+.opt:active{transform:translateY(3px);box-shadow:0 2px 0 #e8d97a}
+.opt.correct{background:#c5f0a0;border-color:#7bc043}
+.opt.wrong{background:#ffd0d0;border-color:#e8556b}
+.opt.disabled{pointer-events:none;opacity:.7}
+.fb{text-align:center;font-size:20px;margin:14px 0 4px;min-height:32px;font-weight:bold}
+.fbc{color:#3a9a20}.fbw{color:#c84040}
+.sb{position:fixed;top:10px;right:10px;font-size:28px;cursor:pointer;background:#fff8e8;border:2px solid #f0e4c0;border-radius:50%;width:48px;height:48px;box-shadow:var(--shadow);z-index:50}
+.end{font-size:64px;margin:20px 0 8px;text-align:center}
+.es{font-size:28px;font-weight:bold;margin:8px 0;text-align:center}
+.est{font-size:22px;margin:4px 0 16px;text-align:center}
+.rt{font-size:18px;margin:16px 0 8px;max-width:560px;width:100%;text-align:left}
+.rl{list-style:none;max-width:560px;width:100%;margin:0 auto 20px}
+.ri{background:#fff8e8;border:2px solid #f0e4c0;border-radius:12px;padding:10px 14px;margin:6px 0;font-size:16px;text-align:left;line-height:1.6}
+.ri .rq2{display:block;margin-bottom:4px;font-weight:bold}
+.ri .ra2{color:#3a9a20;font-weight:bold}
+.ri .rp2{color:#c84040;text-decoration:line-through}
+.ri .re2{color:#e67e22;font-weight:bold}
+.ba{padding:16px 32px;font-size:22px;font-weight:bold;border-radius:16px;cursor:pointer;background:#4cb5d9;color:#fff;border:none;box-shadow:var(--shadow);margin:12px 0}
+.ba:active{transform:translateY(3px);box-shadow:0 2px 0 #3a9ac4}
+.hidden{display:none}
+@media(max-width:520px){.qt{font-size:20px}.opt{font-size:20px;padding:12px}}
+@media(prefers-reduced-motion:reduce){*{transition:none;animation:none}}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<button class="sb" id="sbtn" onclick="toggleS()">&#128266;</button>
+<div class="banner">
+<span class="tile tf">F</span><span class="tile td">D</span><span class="tile tb">B</span><span class="tile tw">W</span><span class="tile ta">A</span>
+<div class="bt"><b>五邑工商總會學校</b><br>FDBWA / P3 三年級 — 加法和減法（四位數）</div>
+</div>
+<div class="pw" id="pips"></div>
+<div id="game">
+<div class="card">
+<div class="ql" id="qlabel">第 1 題 / 共 10 題</div>
+<div class="qt" id="qtext"></div>
+<div class="opts" id="opts"></div>
+<div class="fb" id="fb"></div>
+</div>
+</div>
+<div id="endscreen" class="hidden">
+<div class="end" id="eface"></div>
+<div class="es" id="escore"></div>
+<div class="est" id="estars"></div>
+<div id="rsec"></div>
+<button class="ba" onclick="playAgain()">再玩一次</button>
+</div>
+<script>
+var sound=true;
+function toggleS(){sound=!sound;document.getElementById('sbtn').innerText=sound?'\u{1F50A}':'\u{1F507}';}
+var ac;
+function chime(f){if(!sound)return;if(!ac)ac=new(AudioContext||webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.frequency.value=f;g.gain.setValueAtTime(.12,ac.currentTime);o.start();g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.3);o.stop(ac.currentTime+.3);}
+
+var Q=[
+{q:"3456 + 2347 = ?",a:5803,o:[5803,5703,5813,5903],
+err:{5803:"正確！個位 6+7=13 寫 3 進 1；十位 5+4+1=10 寫 0 進 1；百位 4+3+1=8；千位 3+2=5",5703:"忘記進位：十位 5+4=9 時忘記加上個位進位的 1",5813:"忘記進位：百位 4+3=7 時忘記加上十位進位的 1",5903:"忘記進位：個位和十位的進位都沒有加上"}},
+{q:"6000 − 2468 = ?",a:3532,o:[3532,4542,3542,4532],
+err:{3532:"正確！個位 0−8 不夠減，向十位借 1 變 10−8=2；逐位向前借位",4542:"忘記退位：沒有向高位借位就直接減，0−8 無法計算",3542:"忘記退位：百位忘記借位，0−4 沒有變成 10−4",4532:"忘記退位：千位忘記借位，6−2 應為 5（借位後）"}},
+{q:"4000 − 1385 = ?",a:2615,o:[2615,3625,2715,2515],
+err:{2615:"正確！連續退位：個位 10−5=5、十位 9−8=1、百位 9−3=6、千位 3−1=2",3625:"忘記退位：千位沒有借位，4−1 應為 3（借位後）",2715:"忘記退位：百位沒有正確借位，得到 2715",2515:"忘記退位：個位沒有正確借位，得到 2515"}},
+{q:"2384 + 1657 = ?",a:4041,o:[4041,4051,3951,4141],
+err:{4041:"正確！4+7=11 寫 1 進 1；8+5+1=14 寫 4 進 1；3+6+1=10 寫 0 進 1；2+1+1=4",4051:"忘記進位：十位忘記 +1",3951:"忘記進位：百位忘記 +1",4141:"忘記進位：千位多加了一次進位"}},
+{q:"5230 − 1865 = ?",a:3365,o:[3365,3465,3375,4365],
+err:{3365:"正確！0−5 借位變 10−5=5；逐位向前借位",3465:"忘記退位：十位忘記借位，2−6 沒有變成 12−6",3375:"忘記退位：百位忘記借位，2−8 沒有變成 12−8",4365:"忘記退位：千位忘記借位，5−1 應為 4（借位後）"}},
+{q:"(2345 + 1656) − 1890 = ?",a:2111,o:[2111,2121,2211,2011],
+err:{2111:"正確！先算括號：2345+1656=4001，再算 4001−1890=2111",2121:"忘記進位：括號內加法忘記進位，2345+1656 算錯",2211:"忘記進位：括號內加法多算了進位",2011:"忘記退位：最後減法 4001−1890 忘記借位"}},
+{q:"5000 − (2456 + 1234) = ?",a:1310,o:[1310,1410,1320,1210],
+err:{1310:"正確！先算括號：2456+1234=3690，再算 5000−3690=1310",1410:"忘記進位：括號內加法 2456+1234 算錯",1320:"忘記退位：最後減法 5000−3690 忘記借位",1210:"忘記退位：連續退位時出錯"}},
+{q:"4567 + 2345 − 1234 = ?",a:5678,o:[5678,5688,5578,5778],
+err:{5678:"正確！從左到右：先算 4567+2345=6912，再算 6912−1234=5678",5688:"忘記進位：4567+2345 加法部分忘記進位",5578:"忘記進位：4567+2345 加法部分算錯",5778:"忘記進位：4567+2345 加法部分多算"}},
+{q:"圖書館有 3456 本書，再買了 2345 本，共有多少本？",a:5801,o:[5801,5701,5811,5901],
+err:{5801:"正確！6+5=11 寫 1 進 1；5+4+1=10 寫 0 進 1；4+3+1=8；3+2=5",5701:"忘記進位：十位忘記 +1",5811:"忘記進位：百位忘記 +1",5901:"忘記進位：個位和十位的進位都多加了一次"}},
+{q:"商店有 6000 件貨品，賣出了 2867 件，還剩多少件？",a:3133,o:[3133,4143,3143,4133],
+err:{3133:"正確！連續退位：0−7 借位變 10−7=3；十位 9−6=3；百位 9−8=1；千位 5−2=3",4143:"忘記退位：千位沒有借位，6−2 應為 5（借位後）",3143:"忘記退位：百位忘記借位，0−8 沒有變成 10−8",4133:"忘記退位：連續退位時多借了一次"}}
+];
+
+var qi=0,earned=0,firstTry=true,review=[],ROUND=10;
+
+function initPips(){var p=document.getElementById('pips');p.innerHTML='';for(var i=0;i<ROUND;i++){var d=document.createElement('div');d.className='pip';d.id='pip'+i;d.innerText=(i+1);p.appendChild(d);}}
+
+function showQ(){
+  var item=Q[qi];
+  document.getElementById('qlabel').innerText='\u7B2C '+(qi+1)+' \u984C / \u5171 '+ROUND+' \u984C';
+  document.getElementById('qtext').innerText=item.q;
+  var oc=document.getElementById('opts');
+  oc.innerHTML='';
+  for(var i=0;i<item.o.length;i++){
+    var b=document.createElement('button');
+    b.className='opt';
+    b.innerText=item.o[i];
+    b.dataset.v=item.o[i];
+    b.onclick=function(e){pickOpt(e.target);};
+    oc.appendChild(b);
+  }
+  document.getElementById('fb').innerText='';
+  document.getElementById('fb').className='fb';
+}
+
+function pickOpt(btn){
+  var item=Q[qi];
+  var val=parseInt(btn.dataset.v);
+  var opts=document.querySelectorAll('.opt');
+  for(var i=0;i<opts.length;i++)opts[i].classList.add('disabled');
+  if(val===item.a){
+    btn.classList.add('correct');
+    chime(660);
+    var fb=document.getElementById('fb');
+    if(firstTry){
+      earned++;
+      fb.innerText='\u7B54\u5C0D\u4E86\uFF01 \u2714';
+    }else{
+      fb.innerText='\u7B54\u5C0D\u4E86\uFF01';
+    }
+    fb.className='fb fbc';
+    var pip=document.getElementById('pip'+qi);
+    pip.className=firstTry?'pip done':'pip wrong';
+    setTimeout(function(){nextQ();},700);
+  }else{
+    btn.classList.add('wrong');
+    chime(220);
+    firstTry=false;
+    var fb=document.getElementById('fb');
+    fb.innerText='\u518D\u8A66\u8A66\uFF01';
+    fb.className='fb fbw';
+    for(var i=0;i<opts.length;i++){
+      if(parseInt(opts[i].dataset.v)===item.a){
+        opts[i].classList.remove('disabled');
+      }else{
+        opts[i].classList.add('disabled');
+      }
+    }
+    btn.classList.remove('disabled');
+    if(!review.some(function(r){return r.qi===qi;})){
+      review.push({qi:qi,ans:item.a,pick:val,q:item.q});
+    }else{
+      var r=review.find(function(r){return r.qi===qi;});
+      r.pick=val;
+    }
+    var pip=document.getElementById('pip'+qi);
+    pip.className='pip wrong';
+  }
+}
+
+function nextQ(){
+  qi++;
+  firstTry=true;
+  if(qi>=ROUND){endGame();return;}
+  showQ();
+}
+
+function endGame(){
+  document.getElementById('game').className='hidden';
+  var es=document.getElementById('endscreen');
+  es.className='';
+  var stars=earned;
+  var face=stars>=9?'\u{1F3C6}':stars>=6?'\u{1F31F}':'\u{1F388}';
+  document.getElementById('eface').innerText=face;
+  document.getElementById('escore').innerText='\u7B54\u5C0D '+stars+' / '+ROUND+' \u984C';
+  var ss='';
+  for(var i=0;i<stars;i++)ss+='\u2B50';
+  for(var i=0;i<ROUND-stars;i++)ss+='\u00B7';
+  document.getElementById('estars').innerText=ss;
+
+  var rs=document.getElementById('rsec');
+  if(review.length>0){
+    var html='<div class="rt">\u9700\u8981\u91CD\u6EAB\u7684\u984C\u76EE\uFF1A</div><ul class="rl">';
+    for(var i=0;i<review.length;i++){
+      var r=review[i];
+      var item=Q[r.qi];
+      var errText=item.err[r.pick]||'\u8A08\u7B97\u932F\u8AA4';
+      html+='<li class="ri">';
+      html+='<span class="rq2">'+(r.qi+1)+'. '+item.q+'</span>';
+      html+='<span class="ra2">\u6B63\u78BA\u7B54\u6848\uFF1A'+item.a+'</span>';
+      if(r.pick!==item.a){
+        html+=' <span class="rp2">\u4F60\u9078\u4E86 '+r.pick+'</span>';
+        html+='<br><span class="re2">\u932F\u8AA4\u5206\u6790\uFF1A'+errText+'</span>';
+      }
+      html+='</li>';
+    }
+    html+='</ul>';
+    rs.innerHTML=html;
+  }else{
+    rs.innerHTML='<div class="rt">\u{1F389} \u5168\u90E8\u7B54\u5C0D\uFF01</div>';
+  }
+}
+
+function playAgain(){
+  qi=0;earned=0;firstTry=true;review=[];
+  document.getElementById('endscreen').className='hidden';
+  document.getElementById('game').className='';
+  initPips();
+  showQ();
+}
+
+initPips();
+showQ();
+</script>
+</body>
+</html>
